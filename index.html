@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+
+</head>
+<body>
+    
+
+
+
+    <form id="payment-form">
+        <div id="card-container"></div>
+        <button id="card-button" type="button">Pay</button>
+    </form>
+    <!-- Configure the Web Payments SDK and Card payment method -->
+    <script type="text/javascript">
+        async function main() {
+            const payments = Square.payments('sandbox-sq0idb-buNb45_fgCXvSfTed4VDvg', "L3YH5MMK0081D");
+            const card = await payments.card();
+            await card.attach('#card-container');
+
+            async function eventHandler(event) {
+                event.preventDefault();
+
+                try {
+                    const result = await card.tokenize();
+                    if (result.status === 'OK') {
+                        console.log(`Payment token is ${result.token}`);
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            };
+
+            const cardButton = document.getElementById('card-button');
+            cardButton.addEventListener('click', eventHandler);
+        }
+
+        main();
+    </script>
+</body>
+</html>
