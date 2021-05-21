@@ -30,7 +30,7 @@
                 try {
                     const result = await card.tokenize();
                     if (result.status === 'OK') {
-                        console.log(`Payment token is ${result.token}`);
+                        console.log(result);
                     }
                 } catch (e) {
                     console.error(e);
